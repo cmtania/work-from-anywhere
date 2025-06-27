@@ -60,6 +60,7 @@ export class CreateJobComponent implements OnInit {
     } as any;
 
     this.store.dispatch(new AddJob(newJob));
+    this.closeModal();
   }
 
   getCompany(): any {
