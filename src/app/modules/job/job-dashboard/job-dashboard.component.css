@@ -1,0 +1,244 @@
+.card {
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.card{
+border-radius: 4px;
+background: #fff;
+box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+  transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+padding: 14px 80px 18px 36px;
+cursor: pointer;
+}
+
+.card:hover{
+ transform: scale(1.05);
+box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.c-details span {
+  font-weight: 300;
+  font-size: 13px
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 39px
+}
+
+.badge span {
+  background-color: #fffbec;
+  width: 60px;
+  height: 25px;
+  padding-bottom: 3px;
+  border-radius: 5px;
+  display: flex;
+  color: #fed85d;
+  justify-content: center;
+  align-items: center
+}
+
+.progress {
+  height: 10px;
+  border-radius: 10px
+}
+
+
+.text1 {
+  font-size: 14px;
+  font-weight: 600
+}
+
+.text2 {
+  color: #a5aec0
+}
+
+.btn-create-job, .btn-signin {
+  background-color: #44645a;
+  color: #eee;
+}
+
+.trash{
+  color: red;
+  cursor: pointer;
+}
+
+.edit-icon {
+  cursor: pointer;
+
+}
+
+.view-icon{
+  cursor: pointer;
+ 
+}
+
+
+.showicon {
+  opacity :0;
+}
+
+.card:hover .showicon,
+.card:focus .showicon {
+  opacity :1;
+}
+
+.search {
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.btn-signin {
+  margin-left: 10px;
+}
+
+.action-button {
+    background-color: #87af8d;
+    padding-bottom: 10px;
+    cursor: pointer;
+    color: #ffff;
+    width: auto;
+    border-radius: 10px;
+    border: 1px solid #87af8d;
+    font-size: 14px;
+    padding: 3px 7px 3px 7px;
+    margin-right: 7px;
+
+    &:hover {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+  }
+
+  .panel-heading {
+      margin-top: 15px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      width: 204px;
+      display: flex;
+      align-items: center;
+
+      .logo {
+        min-width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: #87af8d;
+        margin-right: 3px;
+        font-size: 24px;
+        color: #ffffff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .company {
+        font-size: 16px;
+        color: #87af8d;
+        padding-right: 10px;
+      }
+    }
+
+    .page-title {
+      font-size: 44px;
+      color: #87af8d;
+    }
+
+
+.btn-yes {
+      background-color: #87af8d;
+      cursor: pointer;
+      color: #ffff;
+      width: 69px;
+      height: 27px;
+      border-radius: 10px;
+      border: 1px solid #87af8d;
+      font-size: 13px;
+
+      &:hover {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+        transition: all 0.3s ease;
+      }
+}
+
+.btn-cancel {
+    cursor: pointer;
+    color: #AA4A44;
+    width: auto;
+    border-radius: 10px;
+    border: 1px solid #AA4A44;
+    font-size: 14px;
+
+    &:hover {
+      color: #fff;
+      background-color: #AA4A44;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+}
+
+.minimal-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0px;
+  margin-right: 0px;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.minimal-search > .col-auto,
+.minimal-search > .col {
+  width: auto;
+  max-width: none;
+  padding-bottom: 0;
+}
+
+.minimal-select {
+  min-width: 120px;
+  max-width: 160px;
+  font-size: 0.95rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f8f9fa;
+}
+
+.minimal-input {
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f8f9fa;
+  padding: 2px 8px;
+}
+
+.sticky-search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #eee;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .minimal-search {
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+  .minimal-select, .minimal-input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
