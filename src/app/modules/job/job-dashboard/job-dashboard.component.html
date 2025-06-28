@@ -43,16 +43,16 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4" *ngFor="let job of (jobs$ | async) | filterText: search.text:search.type;">
+        @for (job of (jobs$ | async) | filterText: search.text:search.type; track job.JobId) {
+        <div class="col-md-4">
             <div class="card p-2 mb-1">
                 <div (click)="gotoView(job.JobId)">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center">
                             <div class="icon"> <i class="fab fa-{{job.CompanyLogo}}"></i> </div>
                             <div class="ms-2 c-details">
-                                <h6 class="mb-0">{{job.CompanyName}}</h6><span>{{job.CreatedDate |
-                                    posteddate
-                                    }}</span>
+                                <h6 class="mb-0">{{job.CompanyName}}</h6>
+                                <span>{{job.CreatedDate | posteddate}}</span>
                             </div>
                         </div>
                     </div>
@@ -68,16 +68,18 @@
                 <div class="action" align="right">
                     <div class="pull-right">
                         <div class="showicon">
-                        <i (click)="gotoEdit(job.JobId)" [attr.data-name]="job.JobId" class="fas fa-pen-square fa-2x edit-icon"></i>&nbsp;
-                        <i [attr.data-name]="job.JobId" data-bs-toggle="modal" (click)="getJobId(job.JobId)" data-bs-target="#ConfirmationModal"
-                            class="far fa-trash-alt fa-2x trash"></i>
+                            <i (click)="gotoEdit(job.JobId)" [attr.data-name]="job.JobId"
+                                class="fas fa-pen-square fa-2x edit-icon"></i>&nbsp;
+                            <i [attr.data-name]="job.JobId" data-bs-toggle="modal" (click)="getJobId(job.JobId)"
+                                data-bs-target="#ConfirmationModal" class="far fa-trash-alt fa-2x trash"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        }
     </div>
-</div>
+    </div>
 
 <!-- Modal -->
 <div class="modal fade" id="ConfirmationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

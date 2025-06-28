@@ -14,6 +14,7 @@ import { CreateJobComponent } from '../create-job-modal/create-job.component';
 import { CommonService } from '../../services/common.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { JobState } from '../../state-management/states/job.state';
+import { DeleteJob } from '../../state-management/actions/job.action';
 
 @Component({
   selector: 'job-dashboard',
@@ -42,12 +43,8 @@ export class JobDashboardComponent implements OnInit {
     class: "modal-lg"
   };
   jobId: number;
-
-  isJobType: boolean = true;
-
   bsModalRef?: BsModalRef;
   searchForm: FormGroup;
-
 
   private searchFormSubscription: Subscription;
 
@@ -81,9 +78,7 @@ export class JobDashboardComponent implements OnInit {
      }
 
   ngOnInit(): void {
- 
-    // const jobData = this._store.selectSnapshot(JobState.getJobs);
-    // console.log('Job Dashboard Component Initialized', jobData);
+    console.log('Job Dashboard Component Initialized');
     this.searchFormSubscription = this.searchForm.valueChanges.subscribe(val => {
       this.search.type = val.type;
       this.search.text = val.text;
@@ -106,13 +101,11 @@ export class JobDashboardComponent implements OnInit {
   searchAll(): void{
     this.suggestions = [];
     const jobData = this._store.selectSnapshot(JobState.getJobs);
-    console.log('jobData', jobData);
     this.searchVariable.forEach(x => {
       let arr = _.unionBy(_.map(jobData, x));
        this.suggestions.push(...arr);
     });
   }
-
 
   openCreateJobModal() {
     const initialState: ModalOptions = {
@@ -129,12 +122,10 @@ export class JobDashboardComponent implements OnInit {
   }
 
   gotoEdit(jobId: number): void {
-    console.log(jobId);
     this._router.navigateByUrl("/edit-job/" + jobId);
   }
 
   gotoView(jobId: number) {
-    console.log(jobId);
     this._router.navigateByUrl("/view-job/" + jobId);
   }
 
@@ -144,17 +135,9 @@ export class JobDashboardComponent implements OnInit {
 
   purgeJob(): void {
    this._store.dispatch(new ShowSpinner());
-    // this._jobService.purgeJob(this.jobId).pipe(
-    //   take(1),
-    //   tap(() => {
-    //      this.closeModal();
-    //   }),
-    //   finalize(() => {
-    //     this.getJobs();
-    //     this._store.dispatch(new HideSpinner());
-    //   })
-    // ).subscribe();
-  
+   this._store.dispatch(new DeleteJob(this.jobId));
+   this._store.dispatch(new HideSpinner());
+   this.closeModal();
   }
 
   closeModal(): void {

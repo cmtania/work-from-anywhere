@@ -5,6 +5,7 @@ import { take } from 'rxjs';
 import { LoadJobs } from './modules/state-management/actions/job.action';
 import { Company } from './modules/model/company.enum';
 import { CommonService } from './modules/services/common.service';
+import { JobModel } from './modules/model/job-model';
 
 
 @Component({
@@ -27,13 +28,12 @@ export class AppComponent {
   ngOnInit(): void {
     this.jobService.getInitialData().pipe(
       take(1)
-    ).subscribe((data: any[]) => {
+    ).subscribe((data: JobModel[]) => {
     
       data.map((x) => {
           return x.CompanyName = this.getCompanyName(x.CompanyId),
             x.CompanyLogo = this.commonService.getCompanyLogo(x.CompanyId);
         });
-        console.log('Initial data loaded:', data);
       this.store.dispatch(new LoadJobs(data));
     });
   }

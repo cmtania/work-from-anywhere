@@ -20,7 +20,6 @@ export class SpinnerState {
 
   @Action(ShowSpinner)
   show(ctx: StateContext<SpinnerStateModel>) {
-    console.log("Spinner SHOW dispatched"); // Debug log
     ctx.patchState({ loading: true });
   }
 

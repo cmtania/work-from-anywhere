@@ -17,8 +17,6 @@ export class CreateJobComponent implements OnInit {
   modalTitle: string = 'Create New Job';
   @ViewChild('closebutton') closebutton: any;
   companyList: any;
-  isSaving: Boolean = true;
-  isSuccessNotif: Boolean = true;
 
   createJobForm: FormGroup;
 
@@ -42,9 +40,8 @@ export class CreateJobComponent implements OnInit {
   }
 
   SaveJob(): void {
-    this.isSaving = false;
     const newJob: JobModel = {
-      JobId: 0,
+      JobId: this.generateRandomJobId(),
       JobTitle: this.createJobForm.value.JobTitle,
       CompanyId: parseInt(this.createJobForm.value.Company, 10),
       CompanyName: Company[parseInt(this.createJobForm.value.Company, 10)],
@@ -78,6 +75,10 @@ export class CreateJobComponent implements OnInit {
 
   closeModal() {
     this.closebutton.nativeElement.click();
+  }
+
+  private generateRandomJobId(): number {
+    return Math.floor(10000 + Math.random() * 90000);
   }
 
 }

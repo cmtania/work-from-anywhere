@@ -1,5 +1,5 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { AddJob, LoadJobs } from '../actions/job.action';
+import { AddJob, DeleteJob, LoadJobs, UpdateJob } from '../actions/job.action';
 
 export interface JobStateModel {
   jobs: any[];
@@ -8,14 +8,13 @@ export interface JobStateModel {
 @State<JobStateModel>({
   name: 'jobState',
   defaults: {
-    jobs: []
-  }
+    jobs: [],
+  },
 })
 export class JobState {
-
   @Selector()
   static getJobs(state: JobStateModel): any[] {
-    if(state.jobs.length === 0) {
+    if (state.jobs.length === 0) {
       return [];
     }
     const desc = true; // Default to descending order
@@ -28,11 +27,7 @@ export class JobState {
   }
 
   @Action(LoadJobs)
-  loadJobs(
-    { patchState }: StateContext<JobStateModel>,
-    { payload }: LoadJobs
-   ) {
-    console.log('Loading jobs:', [payload]);
+  loadJobs({ patchState }: StateContext<JobStateModel>, { payload }: LoadJobs) {
     patchState({ jobs: payload });
   }
 
@@ -43,6 +38,27 @@ export class JobState {
   ) {
     const state = getState();
     patchState({ jobs: [...state.jobs, payload] });
-  };
+  }
 
+  @Action(UpdateJob)
+  updateJob(
+    { getState, patchState }: StateContext<JobStateModel>,
+    { payload }: UpdateJob
+  ) {
+    const state = getState();
+    const updatedJobs = state.jobs.map((job) =>
+      job.JobId === payload.JobId ? { ...job, ...payload } : job
+    );
+    patchState({ jobs: updatedJobs });
+  }
+
+  @Action(DeleteJob)
+  deleteJob(
+    { getState, patchState }: StateContext<JobStateModel>,
+    { payload }: DeleteJob
+  ) {
+    const state = getState();
+    const filteredJobs = state.jobs.filter((job) => job.JobId !== payload);
+    patchState({ jobs: filteredJobs });
+  }
 }

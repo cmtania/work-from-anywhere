@@ -7,6 +7,8 @@ import { Company } from '../../model/company.enum';
 import { JobService } from '../../services/job-services';
 import { Store } from '@ngxs/store';
 import { HideSpinner, ShowSpinner } from '../../state-management/actions/spinner.action';
+import { JobState } from '../../state-management/states/job.state';
+import { UpdateJob } from '../../state-management/actions/job.action';
 
 @Component({
   selector: 'app-edit-job',
@@ -33,7 +35,7 @@ export class EditJobComponent implements OnInit {
     private _router: Router
   ) {
     this._store = injector.get(Store);
-    this.jobId = this._route.snapshot.params.id;
+    this.jobId = Number(this._route.snapshot.params.id);
   }
 
   ngOnInit(): void {
@@ -54,22 +56,19 @@ export class EditJobComponent implements OnInit {
 
   getJob() {
     this._store.dispatch(new ShowSpinner());
-    // this._jobService.getJob(this.jobId)
-    //   .pipe(
-    //     take(1),
-    //     tap((resp: JobModel) => {
-    //       this.editJobForm.patchValue({
-    //         JobTitle: resp.JobTitle,
-    //         CompanyId: resp.CompanyId,
-    //         JobType: resp.JobType,
-    //         JobDescription: resp.JobDescription,
-    //         Salary: resp.Salary
-    //       });
-    //     }),
-    //     finalize(() => {
-    //       this._store.dispatch(new HideSpinner());
-    //     })
-    //   ).subscribe();
+    const jobData = this._store.selectSnapshot(JobState.getJobs) as Array<JobModel>;
+    const job = jobData.find(x => x.JobId === this.jobId);
+    if(job) {
+      this.editJobForm.patchValue({
+        JobTitle: job.JobTitle,
+        CompanyId: job.CompanyId,
+        JobType: job.JobType,
+        JobDescription: job.JobDescription,
+        Salary: job.Salary
+      });
+    }
+
+    this._store.dispatch(new HideSpinner());
   }
 
   updateJob() {
@@ -80,19 +79,11 @@ export class EditJobComponent implements OnInit {
       JobId: this.jobId,
       UpdatedBy: 'hradmin',
       UpdatedDate: new Date().toISOString(),
-      CreatedDate: new Date().toISOString(),
       Purge: 'N'
     };
-    // this._jobService.putJob(updatedJob).pipe(
-    //   take(1),
-    //   tap(() => {
-    //     this._store.dispatch(new HideSpinner());
-    //   }),
-    //   finalize(() => {
-    //     this.editJobForm.reset();
-    //     this.backtoList();
-    //   })
-    // ).subscribe();
+
+    this._store.dispatch(new UpdateJob(updatedJob));
+    this._store.dispatch(new HideSpinner());
   }
 
   getCompany(): any[] {
